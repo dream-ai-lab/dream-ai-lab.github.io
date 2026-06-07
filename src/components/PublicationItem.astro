@@ -6,14 +6,17 @@ import BibtexButton from './BibtexButton.astro';
 interface Props {
   pub: CollectionEntry<'publications'>['data'];
   memberNames: string[];
+  href?: string;
 }
-const { pub, memberNames } = Astro.props;
+const { pub, memberNames, href } = Astro.props;
 const authors = formatAuthors(pub.authors, memberNames);
 const links = pub.links ?? {};
 const bibtex = toBibtex(pub);
 ---
 <article class="border-l-2 border-slate-200 py-5 pl-5 transition-colors hover:border-red" data-type={pub.type} data-tags={pub.tags.join(',')}>
-  <h3 class="font-sans text-base font-bold text-navy">{pub.title}</h3>
+  <h3 class="font-sans text-base font-bold text-navy">
+    {href ? <a href={href} class="transition-colors hover:text-red">{pub.title}</a> : pub.title}
+  </h3>
   <p class="mt-1 text-sm text-ink/80">
     {authors.map((a, i) => (
       <span>{a.isMember ? <strong class="font-bold text-navy">{a.name}</strong> : a.name}{i < authors.length - 1 ? ', ' : ''}</span>
@@ -24,6 +27,7 @@ const bibtex = toBibtex(pub);
     {pub.award && <span class="ml-2 rounded-sm bg-red/10 px-2 py-0.5 text-xs font-semibold not-italic text-red">{pub.award}</span>}
   </p>
   <div class="mt-2.5 flex flex-wrap gap-3 text-xs font-semibold">
+    {href && <a href={href} class="text-red hover:underline">Details →</a>}
     {links.pdf && <a href={links.pdf} class="text-red hover:underline">PDF</a>}
     {links.arxiv && <a href={links.arxiv} class="text-red hover:underline">arXiv</a>}
     {links.code && <a href={links.code} class="text-red hover:underline">Code</a>}

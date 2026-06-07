@@ -7,9 +7,9 @@ import NewsCard from '../../components/NewsCard.astro';
 const news = (await getCollection('news')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 <BaseLayout title="News" description="Announcements and updates from the DreamAI research group.">
-  <section class="mx-auto max-w-6xl px-5 py-16">
+  <section class="mx-auto max-w-6xl px-5 py-20">
     <SectionHeading eyebrow="News" title="News & announcements" />
-    <div class="grid gap-6 md:grid-cols-3">
+    <div class="reveal grid gap-6 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
       {news.map((n) => (
         <NewsCard href={`/news/${n.id}`} title={n.data.title} date={n.data.date} summary={n.data.summary} image={n.data.image} />
       ))}

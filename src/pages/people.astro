@@ -9,12 +9,12 @@ const people = (await getCollection('people')).map((e) => e.data);
 const groups = groupPeopleByRole(people);
 ---
 <BaseLayout title="People" description="The people behind DreamAI — principal investigators, core team, researchers, and students.">
-  <section class="mx-auto max-w-6xl px-5 py-16">
+  <section class="mx-auto max-w-6xl px-5 py-20">
     <SectionHeading eyebrow="People" title="Our team" />
     {groups.map((g) => (
-      <div class="mb-12">
-        <h3 class="mb-5 font-serif text-xl font-bold text-navy">{g.label}</h3>
-        <div class="grid gap-5 md:grid-cols-2">
+      <div class="mb-14">
+        <h3 class="mb-6 font-sans text-lg font-bold uppercase tracking-tight text-navy">{g.label}<span class="ml-3 inline-block h-1 w-10 translate-y-[-4px] bg-cyan"></span></h3>
+        <div class="reveal grid gap-6 grid-cols-[repeat(auto-fill,minmax(15rem,18rem))]">
           {g.items.map((p) => <PersonCard person={p} />)}
         </div>
       </div>

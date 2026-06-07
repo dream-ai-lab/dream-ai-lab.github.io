@@ -1,6 +1,7 @@
 ---
 name: "Jane Doe"
 role: "pi"
+photo: "/images/people/jane-doe.jpg"
 title: "Principal Investigator"
 interests: ["Trustworthy AI", "LLM reasoning"]
 order: 1

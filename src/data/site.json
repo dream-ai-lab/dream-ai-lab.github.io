@@ -5,6 +5,7 @@
   "hero": {
     "heading": "Advancing the frontier of trustworthy AI",
     "subheading": "We research, build, and openly share the next generation of intelligent systems.",
+    "image": "/images/hero.jpg",
     "primaryCta": { "label": "Explore research", "href": "/publications" },
     "secondaryCta": { "label": "Meet the team", "href": "/people" }
   },

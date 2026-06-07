@@ -1,9 +1,9 @@
 ---
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/lora/600.css';
-import '@fontsource/lora/700.css';
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/montserrat/800.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -30,9 +30,35 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
   </head>
-  <body class="flex min-h-screen flex-col bg-white font-sans text-navy antialiased">
+  <body class="flex min-h-screen flex-col bg-white font-sans text-ink antialiased">
     <Nav />
     <main class="flex-1"><slot /></main>
     <Footer />
+
+    <script is:inline>
+      (() => {
+        const els = [...document.querySelectorAll('.reveal')];
+        if (!els.length) return;
+        const show = (el) => el.classList.add('is-visible');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(show);
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                show(e.target);
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -8% 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+        // Safety net: never leave content hidden if the observer doesn't fire.
+        setTimeout(() => els.forEach((el) => { if (!el.classList.contains('is-visible')) show(el); }), 1200);
+      })();
+    </script>
   </body>
 </html>

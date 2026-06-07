@@ -9,12 +9,12 @@ const resources = (await getCollection('resources')).map((e) => e.data);
 const groups = groupResourcesByCategory(resources);
 ---
 <BaseLayout title="Resources" description="Open-source code, libraries, datasets, and benchmarks from DreamAI.">
-  <section class="mx-auto max-w-6xl px-5 py-16">
+  <section class="mx-auto max-w-6xl px-5 py-20">
     <SectionHeading eyebrow="Resources" title="Code, datasets & tools" />
     {groups.map((g) => (
-      <div class="mb-12">
-        <h3 class="mb-5 font-serif text-xl font-bold text-navy">{g.label}</h3>
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mb-14">
+        <h3 class="mb-6 font-sans text-lg font-bold uppercase tracking-tight text-navy">{g.label}<span class="ml-3 inline-block h-1 w-10 translate-y-[-4px] bg-cyan"></span></h3>
+        <div class="reveal grid gap-6 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
           {g.items.map((r) => <ResourceCard resource={r} />)}
         </div>
       </div>

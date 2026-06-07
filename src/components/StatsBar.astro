@@ -5,12 +5,12 @@ interface Props {
 }
 const { stats } = Astro.props;
 ---
-<section class="border-y border-slate-200 bg-mist">
-  <div class="mx-auto grid max-w-6xl grid-cols-2 divide-x divide-slate-200 md:grid-cols-4">
+<section class="bg-navy text-white">
+  <div class="mx-auto grid max-w-6xl grid-cols-2 divide-x divide-white/15 md:grid-cols-[repeat(auto-fit,minmax(9rem,1fr))]">
     {stats.map((s) => (
-      <div class="px-4 py-8 text-center">
-        <div class="font-serif text-3xl font-extrabold text-blue">{s.value}</div>
-        <div class="mt-1 text-sm text-slate-600">{s.label}</div>
+      <div class="px-4 py-9 text-center">
+        <div class="text-4xl font-extrabold text-white">{s.value}</div>
+        <div class="mt-1.5 text-xs font-semibold uppercase tracking-wider text-white/70">{s.label}</div>
       </div>
     ))}
   </div>

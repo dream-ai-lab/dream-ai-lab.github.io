@@ -1,0 +1,7 @@
+---
+interface Props {
+  bibtex: string;
+}
+const { bibtex } = Astro.props;
+---
+<button type="button" class="bibtex-btn text-blue hover:underline" data-bibtex={bibtex}>BibTeX</button>

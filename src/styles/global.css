@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-navy: #0A2540;
+  --color-blue: #2563EB;
+  --color-blue-400: #60A5FA;
+  --color-mist: #F1F5F9;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+}

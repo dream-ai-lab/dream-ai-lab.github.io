@@ -1,0 +1,26 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/people', label: 'People' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/resources', label: 'Resources' },
+  { href: '/news', label: 'News' },
+];
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="sticky top-0 z-50 bg-navy text-white">
+  <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-4">
+    <a href="/" class="font-serif text-xl font-bold tracking-tight">Dream<span class="text-blue-400">AI</span></a>
+    <ul class="flex flex-wrap gap-5 text-sm">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class:list={['transition-colors hover:text-blue-400', isActive(l.href) && 'font-semibold text-blue-400']}
+          >{l.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>

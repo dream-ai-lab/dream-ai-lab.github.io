@@ -1,49 +1,12 @@
 ---
-// Custom-drawn SVG wordmark — every letter is a hand-built geometric path
-// (uniform monoline stroke, chamfered tech corners, flat-top A, short-V M).
-// "DREAM" = ink, "AI" = cyan->blue gradient, with a cyan tittle over the I.
+// DreamAI wordmark — user-provided vector logo (background removed, cropped).
+// "DREAM" uses currentColor (navy on light, white on dark); "AI" keeps its cyan.
+import logo from '../assets/dreamai-logo.svg?raw';
 interface Props {
   class?: string;
   light?: boolean;
 }
 const { class: className, light = false } = Astro.props;
 const ink = light ? '#FFFFFF' : '#0E2438';
-const gid = `dreamai-grad-${light ? 'light' : 'dark'}`;
-
-// letter centerline paths (cap top y=22, baseline y=86)
-const D = 'M12,86 V22 H46 L58,34 V74 L46,86 Z';
-const R = 'M80,86 V22 H110 L122,32 V42 L110,52 H80 M102,52 L126,86';
-const E = 'M148,22 V86 M148,22 H186 M148,54 H180 M148,86 H186';
-const A = 'M208,86 L223,22 H243 L258,86 M217,66 H249';
-const M = 'M280,86 V22 L309,58 L338,22 V86';
-const A2 = 'M364,86 L379,22 H399 L414,86 M373,66 H405';
-const I = 'M436,86 V22';
 ---
-<svg
-  class={className}
-  viewBox="0 0 448 98"
-  role="img"
-  aria-label="DreamAI"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <defs>
-    <linearGradient id={gid} x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3FD7EF" />
-      <stop offset="100%" stop-color="#2790C7" />
-    </linearGradient>
-  </defs>
-  <g fill="none" stroke-width="14" stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="6">
-    <g stroke={ink}>
-      <path d={D} />
-      <path d={R} />
-      <path d={E} />
-      <path d={A} />
-      <path d={M} />
-    </g>
-    <g stroke={`url(#${gid})`}>
-      <path d={A2} />
-      <path d={I} />
-    </g>
-  </g>
-  <circle cx="436" cy="11" r="7" fill="#3FD7EF" />
-</svg>
+<span class:list={['inline-flex', className]} style={`color:${ink}`} set:html={logo} />

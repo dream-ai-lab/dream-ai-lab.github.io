@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 interface Props {
   resource: CollectionEntry<'resources'>['data'];
 }
@@ -8,9 +9,7 @@ const { resource } = Astro.props;
 <a href={resource.url} target="_blank" rel="noopener" class="group flex h-full flex-col rounded-md border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg">
   <h3 class="flex items-center gap-1.5 font-sans text-base font-bold text-navy">
     {resource.name}
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="text-red" aria-hidden="true">
-      <path d="M7 17 17 7M9 7h8v8" />
-    </svg>
+    <Icon name="lucide:arrow-up-right" class="h-3.5 w-3.5 text-red" aria-hidden="true" />
   </h3>
   <p class="mt-2 flex-1 text-sm text-ink/75">{resource.description}</p>
   {resource.tags.length > 0 && (

@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import NewsCard from '../../components/NewsCard.astro';
+
+const news = (await getCollection('news')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+<BaseLayout title="News" description="Announcements and updates from the DreamAI research group.">
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <SectionHeading eyebrow="News" title="News & announcements" />
+    <div class="grid gap-6 md:grid-cols-3">
+      {news.map((n) => (
+        <NewsCard href={`/news/${n.id}`} title={n.data.title} date={n.data.date} summary={n.data.summary} image={n.data.image} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

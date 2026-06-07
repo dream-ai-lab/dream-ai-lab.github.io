@@ -1,0 +1,24 @@
+{
+  "name": "DreamAI",
+  "tagline": "Advancing the frontier of trustworthy AI",
+  "description": "DreamAI is a research group studying machine learning, NLP, and trustworthy AI. We research, build, and openly share the next generation of intelligent systems.",
+  "hero": {
+    "heading": "Advancing the frontier of trustworthy AI",
+    "subheading": "We research, build, and openly share the next generation of intelligent systems.",
+    "primaryCta": { "label": "Explore research", "href": "/publications" },
+    "secondaryCta": { "label": "Meet the team", "href": "/people" }
+  },
+  "mission": "Our mission is to advance the science of machine intelligence and translate it into open tools, datasets, and benchmarks that the whole community can build on.",
+  "vision": "A future where AI systems are capable, transparent, and trustworthy — developed in the open and accountable to the people they serve.",
+  "social": {
+    "github": "https://github.com/dream-ai-lab",
+    "email": "contact@dreamai.example",
+    "scholar": "",
+    "twitter": ""
+  },
+  "stats_manual": {
+    "members": null,
+    "extra": [{ "label": "Citations", "value": "1,200+" }]
+  },
+  "contact": "contact@dreamai.example"
+}

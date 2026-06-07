@@ -1,5 +1,6 @@
 ---
 import site from '../data/site.json';
+import Logo from './Logo.astro';
 const year = new Date().getFullYear();
 const links = [
   { href: '/people', label: 'People' },
@@ -11,10 +12,7 @@ const links = [
 <footer class="bg-navy-dark text-white/75">
   <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr]">
     <div>
-      <div class="flex items-center gap-2.5">
-        <span class="grid h-9 w-9 place-items-center rounded bg-red font-extrabold text-white">D</span>
-        <span class="text-lg font-extrabold uppercase tracking-tight text-white">Dream<span class="text-red">AI</span></span>
-      </div>
+      <Logo class="h-8 w-auto" light />
       <p class="mt-4 max-w-sm text-sm leading-relaxed">{site.tagline}</p>
     </div>
     <div>

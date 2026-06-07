@@ -1,0 +1,34 @@
+---
+interface Props {
+  class?: string;
+  light?: boolean;
+}
+const { class: className, light = false } = Astro.props;
+const ink = light ? '#FFFFFF' : '#0E2438';
+const gid = `dreamai-grad-${light ? 'light' : 'dark'}`;
+---
+<svg
+  class={className}
+  viewBox="0 0 208 44"
+  role="img"
+  aria-label="DreamAI"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id={gid} x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3FD7EF" />
+      <stop offset="100%" stop-color="#2790C7" />
+    </linearGradient>
+  </defs>
+  <text
+    x="3"
+    y="37"
+    font-family="Montserrat, system-ui, sans-serif"
+    font-weight="800"
+    font-size="38"
+    letter-spacing="1"
+  >
+    <tspan fill={ink}>DREAM</tspan><tspan fill={`url(#${gid})`}>AI</tspan>
+  </text>
+  <circle cx="197" cy="5" r="4" fill="#3FD7EF" />
+</svg>

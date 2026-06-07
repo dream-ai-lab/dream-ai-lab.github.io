@@ -5,7 +5,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import PublicationItem from '../components/PublicationItem.astro';
 import { groupPublicationsByYear } from '../lib/content';
 
-const pubs = (await getCollection('publications')).map((e) => e.data);
+const pubs = (await getCollection('publications')).map((e) => ({ ...e.data, id: e.id }));
 const people = (await getCollection('people')).map((e) => e.data);
 const memberNames = people.map((p) => p.name);
 const grouped = groupPublicationsByYear(pubs);
@@ -25,7 +25,7 @@ const types = [...new Set(pubs.map((p) => p.type))];
     {grouped.map((group) => (
       <div class="pub-year mb-12" data-year={group.year}>
         <h3 class="mb-3 font-sans text-2xl font-extrabold text-navy">{group.year}</h3>
-        {group.items.map((pub) => <PublicationItem pub={pub} memberNames={memberNames} />)}
+        {group.items.map((pub) => <PublicationItem pub={pub} memberNames={memberNames} href={`/publications/${pub.id}`} />)}
       </div>
     ))}
   </section>

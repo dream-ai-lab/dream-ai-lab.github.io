@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatAuthors, toBibtex } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const pubs = await getCollection('publications');
+  const people = await getCollection('people');
+  const memberNames = people.map((p) => p.data.name);
+  return pubs.map((entry) => ({ params: { id: entry.id }, props: { entry, memberNames } }));
+}
+
+const { entry, memberNames } = Astro.props;
+const pub = entry.data;
+const { Content } = await render(entry);
+const authors = formatAuthors(pub.authors, memberNames);
+const links = pub.links ?? {};
+const bibtex = toBibtex(pub);
+
+const buttons = [
+  links.pdf && { href: links.pdf, label: 'Paper', icon: 'file-text' },
+  links.arxiv && { href: links.arxiv, label: 'arXiv', icon: 'book-open' },
+  links.code && { href: links.code, label: 'Code', icon: 'github' },
+  links.project && { href: links.project, label: 'Project', icon: 'globe' },
+  links.video && { href: links.video, label: 'Video', icon: 'youtube' },
+  links.poster && { href: links.poster, label: 'Poster', icon: 'image' },
+  links.slides && { href: links.slides, label: 'Slides', icon: 'presentation' },
+  links.doi && { href: links.doi, label: 'DOI', icon: 'link' },
+].filter(Boolean) as { href: string; label: string; icon: string }[];
+
+const ytEmbed = (url: string) =>
+  url.includes('youtube.com/watch?v=')
+    ? url.replace('watch?v=', 'embed/').split('&')[0]
+    : url.includes('youtu.be/')
+      ? url.replace('youtu.be/', 'www.youtube.com/embed/')
+      : url;
+---
+<BaseLayout title={pub.title} description={pub.abstract ?? `${pub.title} — ${pub.venue}`}>
+  <!-- Hero -->
+  <section class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-4xl px-5 py-16 text-center">
+      <a href="/publications" class="mb-8 inline-block text-xs font-bold uppercase tracking-wide text-red hover:underline">← All publications</a>
+      <h1 class="font-sans text-3xl font-extrabold leading-tight text-navy md:text-4xl">{pub.title}</h1>
+
+      <p class="mx-auto mt-6 max-w-2xl text-lg text-ink">
+        {authors.map((a, i) => (
+          <span>{a.isMember ? <strong class="font-bold text-navy">{a.name}</strong> : a.name}{i < authors.length - 1 ? ', ' : ''}</span>
+        ))}
+      </p>
+
+      <p class="mt-3 text-ink/70">{pub.venue} · {pub.year}</p>
+      {pub.award && <p class="mt-2"><span class="rounded-sm bg-red/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-red">{pub.award}</span></p>}
+
+      {buttons.length > 0 && (
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          {buttons.map((b) => (
+            <a href={b.href} target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-dark">
+              <Icon name={`lucide:${b.icon}`} class="h-4 w-4" />
+              {b.label}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Teaser -->
+  {pub.image && (
+    <section class="mx-auto max-w-4xl px-5 pt-12">
+      <figure>
+        <img src={pub.image} alt={pub.title} class="w-full rounded-md border border-slate-200" />
+        {pub.teaser && <figcaption class="mt-3 text-center text-sm text-ink/65">{pub.teaser}</figcaption>}
+      </figure>
+    </section>
+  )}
+
+  <!-- Abstract -->
+  {pub.abstract && (
+    <section class="mx-auto max-w-3xl px-5 py-16 text-center">
+      <h2 class="font-sans text-2xl font-extrabold uppercase tracking-tight text-navy">Abstract</h2>
+      <div class="mx-auto mt-3 h-1 w-14 bg-cyan"></div>
+      <p class="mt-6 text-left leading-relaxed text-ink/85">{pub.abstract}</p>
+    </section>
+  )}
+
+  <!-- Video -->
+  {links.video && (
+    <section class="mx-auto max-w-4xl px-5 pb-4 text-center">
+      <h2 class="font-sans text-2xl font-extrabold uppercase tracking-tight text-navy">Video</h2>
+      <div class="mx-auto mt-3 mb-6 h-1 w-14 bg-cyan"></div>
+      <div class="aspect-video w-full overflow-hidden rounded-md border border-slate-200">
+        <iframe src={ytEmbed(links.video)} title="Video presentation" class="h-full w-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+  )}
+
+  <!-- Body (method / results / figures) -->
+  <section class="mx-auto max-w-3xl px-5 py-8">
+    <div class="prose prose-slate max-w-none">
+      <Content />
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="bg-mist">
+    <div class="mx-auto max-w-3xl px-5 py-16">
+      <div class="flex items-center justify-between">
+        <h2 class="font-sans text-2xl font-extrabold uppercase tracking-tight text-navy">BibTeX</h2>
+        <button type="button" id="bibtex-copy" class="rounded-full border border-navy px-4 py-1.5 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white" data-bibtex={bibtex}>Copy</button>
+      </div>
+      <pre class="mt-4 overflow-x-auto rounded-md border border-slate-200 bg-white p-5 text-sm text-ink"><code>{bibtex}</code></pre>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.getElementById('bibtex-copy')?.addEventListener('click', (e) => {
+      const btn = e.currentTarget;
+      navigator.clipboard.writeText(btn.dataset.bibtex).then(() => {
+        const prev = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = prev; }, 1500);
+      });
+    });
+  </script>
+</BaseLayout>

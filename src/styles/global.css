@@ -2,10 +2,27 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-navy: #0A2540;
-  --color-blue: #2563EB;
-  --color-blue-400: #60A5FA;
-  --color-mist: #F1F5F9;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Lora", Georgia, serif;
+  /* Transformer Labs-inspired palette: deep teal-blue + cyan accent.
+     Token names kept (navy = primary dark, red = accent) so components are unchanged. */
+  --color-navy: #0B4F71;       /* primary deep teal-blue (dark sections, headings) */
+  --color-navy-dark: #073449;  /* darker — gradients, footer, hero overlay */
+  --color-red: #0E7490;        /* accent teal — links, buttons, bars (AA on white) */
+  --color-red-dark: #0A5468;   /* accent hover */
+  --color-ink: #333333;        /* body text */
+  --color-mist: #EAF5F8;       /* light cyan-tinted section background */
+  --color-cyan: #52CACF;       /* bright signature cyan — decorative accents */
+  --font-sans: "Montserrat", system-ui, sans-serif;
+}
+
+/* Tasteful reveal-on-scroll: elements with .reveal fade/slide in */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
 }

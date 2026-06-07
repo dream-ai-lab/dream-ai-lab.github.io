@@ -7,15 +7,26 @@ interface Props {
   image?: string;
 }
 const { href, title, date, summary, image } = Astro.props;
-const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const month = date.toLocaleDateString('en-US', { month: 'short' });
+const day = date.toLocaleDateString('en-US', { day: '2-digit' });
+const year = date.getFullYear();
 ---
-<a href={href} class="group block overflow-hidden rounded-xl border border-slate-200 bg-white transition hover:shadow-md">
-  <div class="aspect-[16/9] overflow-hidden bg-mist">
-    {image && <img src={image} alt={title} class="h-full w-full object-cover transition group-hover:scale-105" />}
-  </div>
-  <div class="p-5">
-    <div class="text-xs text-slate-500">{dateStr}</div>
-    <h3 class="mt-1 font-serif text-lg font-bold text-navy group-hover:text-blue">{title}</h3>
-    <p class="mt-2 text-sm text-slate-600">{summary}</p>
+<a href={href} class="group flex flex-col overflow-hidden rounded-md border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg">
+  {image && (
+    <div class="aspect-[16/9] overflow-hidden bg-mist">
+      <img src={image} alt={title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+    </div>
+  )}
+  <div class="flex flex-1 gap-4 p-5">
+    <div class="flex-none rounded-sm bg-red px-3 py-2 text-center leading-none text-white">
+      <div class="text-[11px] font-bold uppercase tracking-wide">{month}</div>
+      <div class="mt-1 text-xl font-extrabold">{day}</div>
+      <div class="mt-1 text-[10px] font-semibold text-white/80">{year}</div>
+    </div>
+    <div class="min-w-0">
+      <h3 class="font-sans text-base font-bold leading-snug text-navy group-hover:text-red">{title}</h3>
+      <p class="mt-2 line-clamp-3 text-sm text-ink/75">{summary}</p>
+      <span class="mt-3 inline-block text-xs font-bold uppercase tracking-wide text-red">Read more →</span>
+    </div>
   </div>
 </a>

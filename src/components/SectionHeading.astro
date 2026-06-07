@@ -2,10 +2,12 @@
 interface Props {
   eyebrow?: string;
   title: string;
+  center?: boolean;
 }
-const { eyebrow, title } = Astro.props;
+const { eyebrow, title, center = false } = Astro.props;
 ---
-<div class="mb-8">
-  {eyebrow && <div class="text-xs font-semibold uppercase tracking-widest text-blue">{eyebrow}</div>}
-  <h2 class="mt-1 font-serif text-3xl font-bold text-navy">{title}</h2>
+<div class:list={['mb-8', center && 'text-center']}>
+  {eyebrow && <div class="text-xs font-bold uppercase tracking-[0.18em] text-red">{eyebrow}</div>}
+  <h2 class="mt-2 font-sans text-3xl font-extrabold uppercase tracking-tight text-navy">{title}</h2>
+  <div class:list={['mt-3 h-1 w-14 bg-cyan', center && 'mx-auto']}></div>
 </div>

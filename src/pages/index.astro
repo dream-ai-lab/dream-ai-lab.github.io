@@ -8,7 +8,7 @@ import ResearchCard from '../components/ResearchCard.astro';
 import NewsCard from '../components/NewsCard.astro';
 import PersonCard from '../components/PersonCard.astro';
 import site from '../data/site.json';
-import { computeStats } from '../lib/content';
+import { computeStats, ROLE_ORDER } from '../lib/content';
 
 const publications = (await getCollection('publications')).map((e) => e.data);
 const resources = (await getCollection('resources')).map((e) => e.data);
@@ -20,7 +20,14 @@ const newsEntries = (await getCollection('news')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 const latestNews = newsEntries.slice(0, 3);
-const coreTeam = people.filter((p) => p.role === 'pi' || p.role === 'core');
+const coreTeam = people
+  .filter((p) => p.role === 'pi' || p.role === 'core')
+  .sort(
+    (a, b) =>
+      ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) ||
+      (a.order ?? 0) - (b.order ?? 0) ||
+      a.name.localeCompare(b.name)
+  );
 
 const stats = computeStats({ publications, resources, people, manual: site.stats_manual });
 ---
@@ -28,24 +35,24 @@ const stats = computeStats({ publications, resources, people, manual: site.stats
   <Hero />
   <StatsBar stats={stats} />
 
-  <section class="mx-auto max-w-6xl px-5 py-16">
-    <div class="grid gap-10 md:grid-cols-2">
-      <div>
+  <section class="mx-auto max-w-6xl px-5 py-20">
+    <div class="grid gap-12 md:grid-cols-2">
+      <div class="reveal">
         <SectionHeading eyebrow="Mission" title="Why we exist" />
-        <p class="leading-relaxed text-slate-700">{site.mission}</p>
+        <p class="leading-relaxed text-ink/80">{site.mission}</p>
       </div>
-      <div>
+      <div class="reveal">
         <SectionHeading eyebrow="Vision" title="Where we're going" />
-        <p class="leading-relaxed text-slate-700">{site.vision}</p>
+        <p class="leading-relaxed text-ink/80">{site.vision}</p>
       </div>
     </div>
   </section>
 
   {research.length > 0 && (
     <section class="bg-mist">
-      <div class="mx-auto max-w-6xl px-5 py-16">
-        <SectionHeading eyebrow="Research" title="Research directions" />
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mx-auto max-w-6xl px-5 py-20">
+        <SectionHeading eyebrow="Research" title="Research directions" center />
+        <div class="reveal grid gap-6 grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]">
           {research.map((r) => <ResearchCard title={r.title} summary={r.summary} icon={r.icon} />)}
         </div>
       </div>
@@ -53,12 +60,12 @@ const stats = computeStats({ publications, resources, people, manual: site.stats
   )}
 
   {latestNews.length > 0 && (
-    <section class="mx-auto max-w-6xl px-5 py-16">
-      <div class="flex items-end justify-between">
+    <section class="mx-auto max-w-6xl px-5 py-20">
+      <div class="flex flex-wrap items-end justify-between gap-3">
         <SectionHeading eyebrow="News" title="Highlights & latest news" />
-        <a href="/news" class="mb-8 text-sm font-semibold text-blue hover:underline">All news →</a>
+        <a href="/news" class="mb-8 text-sm font-bold uppercase tracking-wide text-red hover:underline">All news →</a>
       </div>
-      <div class="grid gap-6 md:grid-cols-3">
+      <div class="reveal grid gap-6 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
         {latestNews.map((n) => (
           <NewsCard href={`/news/${n.id}`} title={n.data.title} date={n.data.date} summary={n.data.summary} image={n.data.image} />
         ))}
@@ -68,15 +75,26 @@ const stats = computeStats({ publications, resources, people, manual: site.stats
 
   {coreTeam.length > 0 && (
     <section class="bg-mist">
-      <div class="mx-auto max-w-6xl px-5 py-16">
-        <div class="flex items-end justify-between">
+      <div class="mx-auto max-w-6xl px-5 py-20">
+        <div class="flex flex-wrap items-end justify-between gap-3">
           <SectionHeading eyebrow="Team" title="Core team" />
-          <a href="/people" class="mb-8 text-sm font-semibold text-blue hover:underline">All people →</a>
+          <a href="/people" class="mb-8 text-sm font-bold uppercase tracking-wide text-red hover:underline">All people →</a>
         </div>
-        <div class="grid gap-5 md:grid-cols-2">
+        <div class="reveal grid gap-6 grid-cols-[repeat(auto-fill,minmax(15rem,18rem))]">
           {coreTeam.map((p) => <PersonCard person={p} />)}
         </div>
       </div>
     </section>
   )}
+
+  <!-- Join / CTA band (CAIR-style) -->
+  <section class="bg-red text-white">
+    <div class="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-5 py-14 md:flex-row md:items-center">
+      <div>
+        <h2 class="font-sans text-2xl font-extrabold uppercase tracking-tight md:text-3xl">Join DreamAI</h2>
+        <p class="mt-3 max-w-2xl text-white/90">We welcome students, researchers, and collaborators eager to build trustworthy, open AI. Get in touch to work with us.</p>
+      </div>
+      <a href={`mailto:${site.contact}`} class="flex-none rounded-sm bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-red transition-colors hover:bg-navy hover:text-white">Get in touch →</a>
+    </div>
+  </section>
 </BaseLayout>

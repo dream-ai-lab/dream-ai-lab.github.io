@@ -9,18 +9,51 @@ const links = [
 const path = Astro.url.pathname;
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
-<header class="sticky top-0 z-50 bg-navy text-white">
+<header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
   <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-4">
-    <a href="/" class="font-serif text-xl font-bold tracking-tight">Dream<span class="text-blue-400">AI</span></a>
-    <ul class="flex flex-wrap gap-5 text-sm">
+    <a href="/" class="flex items-center gap-2.5">
+      <span class="grid h-9 w-9 place-items-center rounded bg-navy font-extrabold text-white">D</span>
+      <span class="text-lg font-extrabold uppercase tracking-tight text-navy">Dream<span class="text-red">AI</span></span>
+    </a>
+    <button
+      id="nav-toggle"
+      type="button"
+      class="-mr-2 inline-flex items-center justify-center rounded p-2 text-navy hover:text-red md:hidden"
+      aria-label="Toggle navigation menu"
+      aria-controls="nav-menu"
+      aria-expanded="false"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+    <ul
+      id="nav-menu"
+      class="hidden basis-full flex-col gap-1 pt-2 text-sm font-semibold uppercase tracking-wide md:flex md:basis-auto md:flex-row md:items-center md:gap-7 md:pt-0"
+    >
       {links.map((l) => (
         <li>
           <a
             href={l.href}
-            class:list={['transition-colors hover:text-blue-400', isActive(l.href) && 'font-semibold text-blue-400']}
+            class:list={['block py-2 text-ink transition-colors hover:text-red md:py-0', isActive(l.href) && 'text-red']}
           >{l.label}</a>
         </li>
       ))}
     </ul>
   </nav>
 </header>
+
+<script is:inline>
+  (() => {
+    const toggle = document.getElementById('nav-toggle');
+    const menu = document.getElementById('nav-menu');
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden') === false;
+      menu.classList.toggle('flex', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  })();
+</script>

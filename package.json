@@ -12,12 +12,11 @@
     "cms": "decap-server"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^5.2.8",
     "astro": "^5.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@fontsource/inter": "^5.1.0",
-    "@fontsource/lora": "^5.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "@tailwindcss/vite": "^4.0.0",
     "decap-server": "^3.1.0",

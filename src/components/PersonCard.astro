@@ -5,21 +5,36 @@ interface Props {
 }
 const { person } = Astro.props;
 const links = person.links ?? {};
+const initials = person.name
+  .split(/\s+/)
+  .slice(0, 2)
+  .map((w) => w[0]?.toUpperCase() ?? '')
+  .join('');
 ---
-<div class="flex gap-4 rounded-xl border border-slate-200 bg-white p-5">
-  <div class="h-20 w-20 flex-none overflow-hidden rounded-full bg-slate-200">
-    {person.photo && <img src={person.photo} alt={person.name} class="h-full w-full object-cover" />}
+<div class="group flex flex-col overflow-hidden rounded-md border border-slate-200 bg-white text-center transition hover:-translate-y-1 hover:shadow-lg">
+  <div class="relative grid aspect-square place-items-center overflow-hidden bg-gradient-to-br from-navy to-navy-dark">
+    <span aria-hidden="true" class="text-5xl font-extrabold text-white/90">{initials}</span>
+    {person.photo && (
+      <img
+        src={person.photo}
+        alt={person.name}
+        class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        onerror="this.remove()"
+      />
+    )}
   </div>
-  <div class="min-w-0">
-    <h3 class="font-semibold text-navy">{person.name}</h3>
-    {person.title && <p class="text-sm text-blue">{person.title}</p>}
-    {person.interests.length > 0 && <p class="mt-1 text-xs text-slate-500">{person.interests.join(' · ')}</p>}
-    {person.bio && <p class="mt-2 text-sm text-slate-600">{person.bio}</p>}
-    <div class="mt-2 flex flex-wrap gap-3 text-xs">
-      {links.email && <a href={`mailto:${links.email}`} class="text-blue hover:underline">Email</a>}
-      {links.scholar && <a href={links.scholar} class="text-blue hover:underline">Scholar</a>}
-      {links.github && <a href={links.github} class="text-blue hover:underline">GitHub</a>}
-      {links.website && <a href={links.website} class="text-blue hover:underline">Website</a>}
+  <div class="flex flex-1 flex-col p-5">
+    <h3 class="font-sans text-base font-bold text-navy">{person.name}</h3>
+    {person.title && <p class="mt-0.5 text-xs font-bold uppercase tracking-wide text-red">{person.title}</p>}
+    {person.interests.length > 0 && <p class="mt-2 text-xs text-ink/60">{person.interests.join(' · ')}</p>}
+    {person.bio && <p class="mt-2 text-sm text-ink/75">{person.bio}</p>}
+    <div class="mt-auto pt-3">
+      <div class="flex flex-wrap justify-center gap-3 text-xs font-semibold">
+        {links.email && <a href={`mailto:${links.email}`} class="text-red hover:underline">Email</a>}
+        {links.scholar && <a href={links.scholar} class="text-red hover:underline">Scholar</a>}
+        {links.github && <a href={links.github} class="text-red hover:underline">GitHub</a>}
+        {links.website && <a href={links.website} class="text-red hover:underline">Website</a>}
+      </div>
     </div>
   </div>
 </div>

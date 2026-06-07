@@ -12,19 +12,19 @@ const grouped = groupPublicationsByYear(pubs);
 const types = [...new Set(pubs.map((p) => p.type))];
 ---
 <BaseLayout title="Publications" description="Papers and preprints from the DreamAI research group.">
-  <section class="mx-auto max-w-6xl px-5 py-16">
+  <section class="mx-auto max-w-6xl px-5 py-20">
     <SectionHeading eyebrow="Publications" title="Papers & preprints" />
 
-    <div class="mb-8 flex flex-wrap gap-2" id="pub-filters">
-      <button type="button" class="filter-btn rounded-full border border-blue bg-blue px-3 py-1 text-sm text-white" data-filter="all">All</button>
+    <div class="mb-10 flex flex-wrap gap-2" id="pub-filters">
+      <button type="button" class="filter-btn rounded-full border border-red bg-red px-4 py-1.5 text-sm font-semibold text-white" data-filter="all">All</button>
       {types.map((t) => (
-        <button type="button" class="filter-btn rounded-full border border-slate-300 px-3 py-1 text-sm text-slate-600 hover:border-blue" data-filter={t}>{t}</button>
+        <button type="button" class="filter-btn rounded-full border border-slate-300 px-4 py-1.5 text-sm font-semibold capitalize text-ink transition-colors hover:border-red" data-filter={t}>{t}</button>
       ))}
     </div>
 
     {grouped.map((group) => (
-      <div class="pub-year mb-10" data-year={group.year}>
-        <h3 class="mb-2 font-serif text-xl font-bold text-blue">{group.year}</h3>
+      <div class="pub-year mb-12" data-year={group.year}>
+        <h3 class="mb-3 font-sans text-2xl font-extrabold text-navy">{group.year}</h3>
         {group.items.map((pub) => <PublicationItem pub={pub} memberNames={memberNames} />)}
       </div>
     ))}
@@ -37,10 +37,10 @@ const types = [...new Set(pubs.map((p) => p.type))];
         const filter = btn.dataset.filter;
         document.querySelectorAll('#pub-filters .filter-btn').forEach((b) => {
           const active = b === btn;
-          b.classList.toggle('bg-blue', active);
+          b.classList.toggle('bg-red', active);
           b.classList.toggle('text-white', active);
-          b.classList.toggle('border-blue', active);
-          b.classList.toggle('text-slate-600', !active);
+          b.classList.toggle('border-red', active);
+          b.classList.toggle('text-ink', !active);
           b.classList.toggle('border-slate-300', !active);
         });
         document.querySelectorAll('article[data-type]').forEach((a) => {

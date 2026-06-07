@@ -1,21 +1,39 @@
 ---
 import site from '../data/site.json';
 const year = new Date().getFullYear();
+const links = [
+  { href: '/people', label: 'People' },
+  { href: '/publications', label: 'Publications' },
+  { href: '/resources', label: 'Resources' },
+  { href: '/news', label: 'News' },
+];
 ---
-<footer class="mt-20 bg-navy text-white/80">
-  <div class="mx-auto flex max-w-6xl flex-col justify-between gap-6 px-5 py-10 text-sm sm:flex-row">
+<footer class="bg-navy-dark text-white/75">
+  <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr]">
     <div>
-      <div class="font-serif text-lg font-bold text-white">Dream<span class="text-blue-400">AI</span></div>
-      <p class="mt-2 max-w-sm">{site.tagline}</p>
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-9 w-9 place-items-center rounded bg-red font-extrabold text-white">D</span>
+        <span class="text-lg font-extrabold uppercase tracking-tight text-white">Dream<span class="text-red">AI</span></span>
+      </div>
+      <p class="mt-4 max-w-sm text-sm leading-relaxed">{site.tagline}</p>
     </div>
-    <div class="flex flex-wrap gap-5">
-      {site.social.github && <a href={site.social.github} class="hover:text-blue-400">GitHub</a>}
-      {site.social.scholar && <a href={site.social.scholar} class="hover:text-blue-400">Scholar</a>}
-      {site.social.twitter && <a href={site.social.twitter} class="hover:text-blue-400">Twitter</a>}
-      {site.contact && <a href={`mailto:${site.contact}`} class="hover:text-blue-400">Contact</a>}
+    <div>
+      <div class="text-xs font-bold uppercase tracking-wider text-white/50">Explore</div>
+      <ul class="mt-4 space-y-2 text-sm">
+        {links.map((l) => <li><a href={l.href} class="hover:text-red">{l.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <div class="text-xs font-bold uppercase tracking-wider text-white/50">Connect</div>
+      <ul class="mt-4 space-y-2 text-sm">
+        {site.social.github && <li><a href={site.social.github} class="hover:text-red">GitHub</a></li>}
+        {site.social.scholar && <li><a href={site.social.scholar} class="hover:text-red">Scholar</a></li>}
+        {site.social.twitter && <li><a href={site.social.twitter} class="hover:text-red">Twitter</a></li>}
+        {site.contact && <li><a href={`mailto:${site.contact}`} class="hover:text-red">Contact</a></li>}
+      </ul>
     </div>
   </div>
-  <div class="border-t border-white/10 py-4 text-center text-xs text-white/50">
+  <div class="border-t border-white/10 py-4 text-center text-xs text-white/45">
     © {year} DreamAI. Built with Astro · Hosted on GitHub Pages.
   </div>
 </footer>

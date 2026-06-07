@@ -1,8 +1,82 @@
 ---
-import '../styles/global.css';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import StatsBar from '../components/StatsBar.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ResearchCard from '../components/ResearchCard.astro';
+import NewsCard from '../components/NewsCard.astro';
+import PersonCard from '../components/PersonCard.astro';
+import site from '../data/site.json';
+import { computeStats } from '../lib/content';
+
+const publications = (await getCollection('publications')).map((e) => e.data);
+const resources = (await getCollection('resources')).map((e) => e.data);
+const people = (await getCollection('people')).map((e) => e.data);
+const research = (await getCollection('research'))
+  .map((e) => e.data)
+  .sort((a, b) => a.order - b.order);
+const newsEntries = (await getCollection('news')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const latestNews = newsEntries.slice(0, 3);
+const coreTeam = people.filter((p) => p.role === 'pi' || p.role === 'core');
+
+const stats = computeStats({ publications, resources, people, manual: site.stats_manual });
 ---
-<!doctype html>
-<html lang="en">
-  <head><meta charset="utf-8" /><title>DreamAI</title></head>
-  <body class="font-sans text-navy"><h1 class="font-serif">DreamAI — coming soon</h1></body>
-</html>
+<BaseLayout>
+  <Hero />
+  <StatsBar stats={stats} />
+
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <SectionHeading eyebrow="Mission" title="Why we exist" />
+        <p class="leading-relaxed text-slate-700">{site.mission}</p>
+      </div>
+      <div>
+        <SectionHeading eyebrow="Vision" title="Where we're going" />
+        <p class="leading-relaxed text-slate-700">{site.vision}</p>
+      </div>
+    </div>
+  </section>
+
+  {research.length > 0 && (
+    <section class="bg-mist">
+      <div class="mx-auto max-w-6xl px-5 py-16">
+        <SectionHeading eyebrow="Research" title="Research directions" />
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {research.map((r) => <ResearchCard title={r.title} summary={r.summary} icon={r.icon} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {latestNews.length > 0 && (
+    <section class="mx-auto max-w-6xl px-5 py-16">
+      <div class="flex items-end justify-between">
+        <SectionHeading eyebrow="News" title="Highlights & latest news" />
+        <a href="/news" class="mb-8 text-sm font-semibold text-blue hover:underline">All news →</a>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        {latestNews.map((n) => (
+          <NewsCard href={`/news/${n.id}`} title={n.data.title} date={n.data.date} summary={n.data.summary} image={n.data.image} />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {coreTeam.length > 0 && (
+    <section class="bg-mist">
+      <div class="mx-auto max-w-6xl px-5 py-16">
+        <div class="flex items-end justify-between">
+          <SectionHeading eyebrow="Team" title="Core team" />
+          <a href="/people" class="mb-8 text-sm font-semibold text-blue hover:underline">All people →</a>
+        </div>
+        <div class="grid gap-5 md:grid-cols-2">
+          {coreTeam.map((p) => <PersonCard person={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

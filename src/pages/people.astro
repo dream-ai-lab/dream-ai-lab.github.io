@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PersonCard from '../components/PersonCard.astro';
+import { groupPeopleByRole } from '../lib/content';
+
+const people = (await getCollection('people')).map((e) => e.data);
+const groups = groupPeopleByRole(people);
+---
+<BaseLayout title="People" description="The people behind DreamAI — principal investigators, core team, researchers, and students.">
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <SectionHeading eyebrow="People" title="Our team" />
+    {groups.map((g) => (
+      <div class="mb-12">
+        <h3 class="mb-5 font-serif text-xl font-bold text-navy">{g.label}</h3>
+        <div class="grid gap-5 md:grid-cols-2">
+          {g.items.map((p) => <PersonCard person={p} />)}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

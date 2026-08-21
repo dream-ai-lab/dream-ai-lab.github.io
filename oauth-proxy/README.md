@@ -21,12 +21,13 @@ that server. It's free on Cloudflare's plan and holds no state.
 |---|---|
 | Application name | `DreamAI CMS` |
 | Homepage URL | `https://dream-ai-lab.github.io` |
-| Authorization callback URL | `https://dreamai-cms-oauth.<your-subdomain>.workers.dev/callback` |
-
-You don't know `<your-subdomain>` yet — put a placeholder, deploy step 2, then come back
-and correct it. The callback URL must match the deployed Worker exactly.
+| Authorization callback URL | `https://dreamai-cms-oauth.dreamailabs-research.workers.dev/callback` |
 
 Generate a client secret and keep both values to hand.
+
+Leave **Allow wildcard matching** off. Consider unchecking **Expire user access tokens**:
+GitHub then issues an 8-hour token plus a refresh token, and this Worker doesn't implement
+the refresh flow — editors would have to log in again every 8 hours.
 
 > Register it under the **dream-ai-lab org** (Settings → Developer settings) rather than a
 > personal account, so the app outlives any one member.
@@ -51,15 +52,9 @@ npx wrangler secret put GITHUB_CLIENT_ID
 npx wrangler secret put GITHUB_CLIENT_SECRET
 ```
 
-### 4. Point the CMS at it
+### 4. Point the CMS at it — done
 
-In `public/admin/config.yml`, replace `YOUR-SUBDOMAIN` in `backend.base_url` with the real
-Worker subdomain from step 2. Commit and push — GitHub Actions redeploys the site.
-
-### 5. Fix the callback URL
-
-Go back to the OAuth App and set the callback to the real
-`https://dreamai-cms-oauth.<your-subdomain>.workers.dev/callback`.
+`backend.base_url` in `public/admin/config.yml` already points at the deployed Worker.
 
 ## Verify
 

@@ -1,0 +1,8 @@
+name = "dreamai-cms-oauth"
+main = "src/index.js"
+compatibility_date = "2024-11-06"
+
+[vars]
+# Origins allowed to receive a token from the popup. Add localhost only if you
+# want to test the GitHub backend (not the local backend) from a dev server.
+ALLOWED_ORIGINS = "https://dream-ai-lab.github.io"

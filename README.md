@@ -44,10 +44,15 @@ to the local content files. Commit with git as usual.
 > site (and via `npm run preview`) plain `/admin/` works. Both processes must be running or
 > Decap can't reach the local backend.
 
-### 3. Hosted admin (optional, future)
-To let members log in at `https://dream-ai-lab.github.io/admin/` from any browser, deploy a
-small OAuth proxy (e.g. a free Cloudflare Worker) and register a GitHub OAuth App, then point
-`backend` in `public/admin/config.yml` at it. Until then, use options 1–2.
+### 3. Hosted admin (login with GitHub)
+Members with write access to the repo can edit at `https://dream-ai-lab.github.io/admin/`
+from any browser. Login goes through a small Cloudflare Worker in
+[`oauth-proxy/`](oauth-proxy/README.md), which performs the code→token exchange a static site
+can't do itself; it's deployed and `public/admin/config.yml` already points at it.
+
+> The remaining step is registering a GitHub OAuth App and adding its client ID and secret to
+> the Worker — see [`oauth-proxy/README.md`](oauth-proxy/README.md). Until then login fails.
+> Use options 1–2 in the meantime.
 
 ## How the homepage stats work
 `# Publications`, `# Datasets`, and `# Benchmarks` are counted automatically from the content.

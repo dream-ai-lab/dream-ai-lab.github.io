@@ -2,6 +2,11 @@ backend:
   name: github
   repo: dream-ai-lab/dream-ai-lab.github.io
   branch: main
+  # OAuth proxy for "Login with GitHub" — see oauth-proxy/README.md.
+  # Replace YOUR-SUBDOMAIN with the subdomain `wrangler deploy` prints. Without a
+  # base_url Decap falls back to api.netlify.com, which 404s for non-Netlify sites.
+  base_url: https://dreamai-cms-oauth.YOUR-SUBDOMAIN.workers.dev
+  auth_endpoint: auth
 
 # Local editing without an OAuth proxy: run `npm run cms` + `npm run dev`,
 # then open http://localhost:4321/admin/ — Decap writes files on disk.

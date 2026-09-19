@@ -1,7 +1,7 @@
 ---
-title: Foundation Model Optimization
-summary: Building and evaluating large language models that reason reliably and
-  transparently.
+title: Human-AI Alignment
+summary: Preference optimization, safety alignment, and token-based methods for
+  aligning foundation models with human intent.
 icon: brain-circuit
 order: 1
 ---

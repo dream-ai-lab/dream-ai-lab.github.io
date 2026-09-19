@@ -1,6 +1,7 @@
 ---
-title: "Trustworthy & Open AI"
-summary: "Open datasets, benchmarks, and methods for safe, accountable AI systems."
-icon: "shield-check"
+title: Explainable & Efficient AI
+summary: Interpretable models and resource-efficient learning for deployable,
+  trustworthy AI systems.
+icon: shield-check
 order: 3
 ---

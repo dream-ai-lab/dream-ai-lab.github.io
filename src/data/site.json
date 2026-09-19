@@ -1,5 +1,5 @@
 {
-  "contact": "contact@dreamai.example",
+  "contact": "dreamaigroup@gmail.com",
   "stats_manual": {
     "members": null,
     "extra": [
@@ -14,9 +14,9 @@
   "mission": "Our mission is to nurture young talented AI researchers and advance the next generation of AI/ML intelligent systems.",
   "social": {
     "github": "https://github.com/dream-ai-lab",
-    "email": "contact@dreamai.example",
-    "scholar": "",
-    "twitter": ""
+    "email": "dreamaigroup@gmail.com",
+    "scholar": "https://scholar.google.com/citations?hl=en&user=RTANGygAAAAJ",
+    "twitter": "https://www.facebook.com/profile.php?id=61593592051412"
   },
   "tagline": "Advancing the next generation of AI/ML intelligent systems",
   "hero": {

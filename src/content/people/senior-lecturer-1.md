@@ -14,6 +14,6 @@ bio: Thanh-Toan (Toan) Do is currently a Senior Lecturer at the Department of
   University of Liverpool. His research interests include Computer Vision and
   Machine Learning. Some particular research problems are Compact Deep Learning,
   Few-shot Learning, and Metric Learning.
-order: 0
+order: 4
 active: true
 ---

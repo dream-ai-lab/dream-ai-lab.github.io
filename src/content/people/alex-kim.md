@@ -18,6 +18,6 @@ interests:
   - Human-AI Alignment
   - Machine Reasoning
   - ...
-order: 1
+order: 0
 active: true
 ---

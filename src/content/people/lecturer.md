@@ -9,6 +9,6 @@ bio: Nguyen Duc Anh earned his Ph.D. in Bioinformatics from Kyoto University in
   University of Science and Technology. His research interests focus on
   explainable artificial intelligence and efficient machine learning models,
   particularly knowledge distillation and model quantization.
-order: 4
+order: 5
 active: true
 ---

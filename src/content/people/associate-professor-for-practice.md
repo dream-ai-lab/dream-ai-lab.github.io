@@ -18,6 +18,6 @@ bio: "Ngoc-Thanh Dinh is currently an associate professor of practice at Centrer
   the network edge across various industries. "
 interests:
   - AI/ML*Logicalreasoning
-order: 0
+order: 1
 active: true
 ---

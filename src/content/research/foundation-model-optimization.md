@@ -1,7 +1,7 @@
 ---
-title: Foundation Model Optimization
-summary: Building and evaluating large language models that reason reliably and
-  transparently.
+title: Machine Reasoning
+summary: Plan-guided learning, structured inference, and reasoning capabilities
+  in large language models.
 icon: brain-circuit
 order: 1
 ---

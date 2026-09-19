@@ -27,6 +27,6 @@ bio: Dr Son Tran is an expert in Artificial Intelligence, with research
   Artificial Intelligence, International Conference on Principles of Knowledge
   Representation and Reasoning, and International Conference on Autonomous
   Agents and Multiagent Systems.
-order: 0
+order: 3
 active: true
 ---

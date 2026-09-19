@@ -18,6 +18,6 @@ bio: Linh Ngo Van is a member of the DreamAI Team. He is also a lecturer and
   Intelligence, IEEE Transactions on Knowledge and Data Engineering (TKDE),
   Knowledge-Based Systems, Knowledge and Information Systems (KAIS), and
   Neurocomputing.
-order: 0
+order: 2
 active: true
 ---
